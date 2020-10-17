@@ -13,6 +13,7 @@ export default {
     }
 }
 var cursoInfo = {
+    id: Number,
     nombre: String,
     profesor: String
 }

@@ -8,7 +8,7 @@
             Mis Cursos 
         </p>
         <div id="lista">
-            <Curso v-bind:cursr="{nombre: 'aa', profesor: 'sss'}" />
+            <Curso v-for="curso in cursos" v-bind:cursr="curso" v-bind:key = "curso.id" />
         </div>
         <div class = "boton">
             Cursos Anteriores
@@ -20,16 +20,33 @@
 
 <script>
 import Curso from "@/components/cours.vue";
+const axios = require('axios');
 export default {
     name: "cursos",
     components: {
         Curso
-    }
+    },
+    data () {
+        return {
+            cursos: null
+        }
+    },
+    mounted() {
+        axios.post('https://be4dc335-d873-469a-b59a-3a5b4dc0d7d9.mock.pstmn.io', {
+            query: `
+                getCursoStudentById (12) {
+                    id
+                    nombre
+                    profesor
+                }
+            `
+        }).then(response => (this.cursos = response.data))
+    } 
 }
 </script>
 
 <style>
-div#lista{
+div#lista{ 
     display: flex;
     flex-direction: row ;
     flex-wrap: wrap;
