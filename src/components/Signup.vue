@@ -69,8 +69,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: "Login",
+  name: "signup",
   data() {
     return {
       errors: [],
@@ -105,7 +106,35 @@ export default {
     },
     sendNewUser: function(checkpoint) {
       if (checkpoint) {
-        //enviar usuario
+        axios.post(this.$store.state.backURL , {
+            query: `
+                mutation{
+                  createUser(user: {
+                  username: "$username",
+                  mail: "$mail",
+                  birthDate: "$birthDate",
+                  career: "$career",
+                  role: "$role",
+                  name: "$name",
+                  password: "$password",
+                })
+              {
+                id
+                name
+                mail
+              }
+            }
+            `,
+            variables:{
+              username: this.form.nombreU,
+              mail: this.form.email,
+              birthDate: this.form.email,
+              career: this.form.carrera,
+              role: "estudiante",
+              name: this.form.nombreC,
+              password: this.form.cpassword,
+            }
+        }).then(response => (response.data.data.createUser)).catch(err => console.log(err))
       } else {
         //mostrar error
       }
