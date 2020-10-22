@@ -12,16 +12,31 @@ const routes = [
     name: "About",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
-  },{
-  path: "/nani",
-  name: "Curso",
-    component: () =>
-      import("../views/trying.vue")
-  },{
+  },
+  {
+    path: "/nani",
+    name: "Curso",
+    component: () => import("../views/trying.vue")
+  },
+  {
     path: "/actividades",
     name: "Actividad",
-    component: () =>
-      import("../views/Actividades.vue")
+    component: () => import("../views/Actividades.vue")
+  },
+  {
+    path: "/mensajes",
+    name: "Mensajes",
+    component: () => import("../views/Mensajes.vue")
+  },
+  {
+    path: "/",
+    name: "signup",
+    component: () => import("../components/Signup.vue")
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../components/Login.vue")
   }
 ];
 
@@ -31,4 +46,3 @@ const router = createRouter({
 });
 
 export default router;
- 
