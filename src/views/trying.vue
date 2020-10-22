@@ -36,7 +36,6 @@ export default {
                 getCursoStudentById (12) {
                     id
                     nombre
-                    profesor
                 }
             `
         }).then(response => (this.cursos = response.data))

@@ -1,7 +1,7 @@
 <template>
   <div class="curso">
       <span>{{cursr.nombre}}</span>
-      <br>{{cursr.profesor}}
+      <br>
     </div>
 </template>
 
@@ -14,8 +14,7 @@ export default {
 }
 var cursoInfo = {
     id: Number,
-    nombre: String,
-    profesor: String
+    nombre: String
 }
 </script>
 

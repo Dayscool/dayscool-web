@@ -1,9 +1,10 @@
 <template>
   <div>
+      <link href='https://fonts.googleapis.com/css?family=Montserrat Alternates' rel='stylesheet'>
       <div id="cuerpo">
         <h2>Clase de los Jueves</h2>
     </div>
-    <div id = "lista">
+    <div id = "listaA">
         <Actividad v-bind:activity="{name: 'gato', date: 'ocelote'}"/>
     </div>
   </div>
@@ -17,6 +18,7 @@ export default {
         Actividad
     }
 }
+
 </script>
 
 <style>
@@ -42,7 +44,7 @@ div.boton{
     color: #FFFFFF;
     border-radius: 8px;
 }
-div#lista{
+div#listaA{
     display: flex;
     flex-direction: column ;
     align-content: flex-start;
