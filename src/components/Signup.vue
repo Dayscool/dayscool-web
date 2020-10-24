@@ -62,7 +62,7 @@
             placeholder="Confirmar Contraseña"
           />
         </form>
-        <button type="submit" class="button button1">Registrarme</button>
+        <button type="submit" class="button button1" @click="sendNewUser()">Registrarme</button>
       </div>
     </div>
   </div>
@@ -84,6 +84,7 @@ export default {
         password: "",
         cpassword: "",
       },
+      prueba: {}
     };
   },
   methods: {
@@ -104,40 +105,30 @@ export default {
       e.preventDefault();
       console.log(this.errors);
     },
-    sendNewUser: function(checkpoint) {
-      if (checkpoint) {
-        axios.post(this.$store.state.backURL , {
+    sendNewUser() {
+      //if (checkpoint) {
+        axios.post('http://ec2-3-236-80-181.compute-1.amazonaws.com:5000/graphql' , {
             query: `
-                mutation{
-                  createUser(user: {
-                  username: "$username",
-                  mail: "$mail",
-                  birthDate: "$birthDate",
-                  career: "$career",
-                  role: "$role",
-                  name: "$name",
-                  password: "$password",
-                })
-              {
+            mutation createUser($user: UserInput!){
+              createUser(user: $user) {
                 id
-                name
-                mail
+                username
               }
+            }`,
+            variables:{ user: {
+              username: "prueba5",
+              mail: "Prueba5@mail.com",
+              birthDate: "2007-12-03",
+              career: "engineering",
+              role: "student",
+              name: "otraprueba5",
+              password: "1234"}
             }
-            `,
-            variables:{
-              username: this.form.nombreU,
-              mail: this.form.email,
-              birthDate: this.form.email,
-              career: this.form.carrera,
-              role: "estudiante",
-              name: this.form.nombreC,
-              password: this.form.cpassword,
-            }
-        }).then(response => (response.data.data.createUser)).catch(err => console.log(err))
-      } else {
+        }).then(response => (console.log(response.data.data)))
+          .catch(err => console.log(err));
+      //} else {
         //mostrar error
-      }
+      //}
     },
   },
 };

@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {bakcURL:''},
+  state: {backURL:''},
   mutations: {},
   actions: {},
   modules: {}
