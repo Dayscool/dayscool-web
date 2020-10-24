@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "CreateActivity",
   data() {
     return {
         form:{
