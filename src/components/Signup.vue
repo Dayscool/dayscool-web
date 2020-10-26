@@ -66,14 +66,16 @@
             placeholder="Confirmar Contraseña"
           />
         </form>
-        <button type="submit" class="button button1" @click="sendNewUser()">Registrarme</button>
+        <button type="submit" class="button button1" @click="sendNewUser()">
+          Registrarme
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   name: "signup",
   data() {
@@ -84,12 +86,12 @@ export default {
         nombreU: "",
         email: "",
         fecha: "",
-        rol:"",
+        rol: "",
         carrera: "",
         password: "",
         cpassword: "",
       },
-      prueba: {}
+      prueba: {},
     };
   },
   methods: {
@@ -110,10 +112,11 @@ export default {
       e.preventDefault();
       console.log(this.errors);
     },
-    sendNewUser(){
+    sendNewUser() {
       //if (checkUser) {
-        axios.post(this.$store.state.backURL , {
-            query: `
+      axios
+        .post(this.$store.state.backURL, {
+          query: `
             mutation createUser2($user2: User2Input!){
               createUser2(user2: $user2) {
                 id
@@ -121,26 +124,29 @@ export default {
                 role
               }
             }`,
-            variables:{ user2: {
+          variables: {
+            user2: {
               username: this.form.nombreU,
               mail: this.form.email,
               birthDate: this.form.fecha,
               career: this.form.carrera,
               role: this.form.rol,
               name: this.form.nombreC,
-              password: this.form.password}
-            }
-        }).then(response => {
-          console.log(response.data.data)
+              password: this.form.password,
+            },
+          },
         })
-        .catch(err => console.log(err));
+        .then((response) => {
+          console.log(response.data.data);
+        })
+        .catch((err) => console.log(err));
 
-        console.log(this.form.fecha)
+      console.log(this.form.fecha);
       //} else  {
-        //mostrar error
+      //mostrar error
       //}
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -173,7 +179,8 @@ body {
   border-radius: 10px;
   display: inline-block;
 }
-input,select {
+input,
+select {
   width: 100%;
   padding: 5px 5px;
   margin: 1px 0;
