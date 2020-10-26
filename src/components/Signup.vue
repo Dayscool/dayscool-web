@@ -44,7 +44,11 @@
             id="carrera"
             required
           />
-          <label></label>
+          <label>Rol</label>
+          <select name="rol" id="rol" v-model="form.rol">
+            <option>Profesor</option>
+            <option>Estudiante</option>
+          </select>
           <label>Contraseña</label>
           <input
             type="password"
@@ -80,6 +84,7 @@ export default {
         nombreU: "",
         email: "",
         fecha: "",
+        rol:"",
         carrera: "",
         password: "",
         cpassword: "",
@@ -100,37 +105,42 @@ export default {
       ) {
         return true;
       } else {
-        this.errors.push();
+        this.errors.push("datos incompletos");
       }
       e.preventDefault();
       console.log(this.errors);
     },
-    sendNewUser() {
-      //if (checkpoint) {
-        axios.post('http://ec2-3-236-80-181.compute-1.amazonaws.com:5000/graphql' , {
+    sendNewUser(){
+      //if (checkUser) {
+        axios.post(this.$store.state.backURL , {
             query: `
-            mutation createUser($user: UserInput!){
-              createUser(user: $user) {
+            mutation createUser2($user2: User2Input!){
+              createUser2(user2: $user2) {
                 id
                 username
+                role
               }
             }`,
-            variables:{ user: {
-              username: "prueba5",
-              mail: "Prueba5@mail.com",
-              birthDate: "2007-12-03",
-              career: "engineering",
-              role: "student",
-              name: "otraprueba5",
-              password: "1234"}
+            variables:{ user2: {
+              username: this.form.nombreU,
+              mail: this.form.email,
+              birthDate: this.form.fecha,
+              career: this.form.carrera,
+              role: this.form.rol,
+              name: this.form.nombreC,
+              password: this.form.password}
             }
-        }).then(response => (console.log(response.data.data)))
-          .catch(err => console.log(err));
-      //} else {
+        }).then(response => {
+          console.log(response.data.data)
+        })
+        .catch(err => console.log(err));
+
+        console.log(this.form.fecha)
+      //} else  {
         //mostrar error
       //}
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -144,12 +154,14 @@ body {
   //background: url(../img/fondo.jpg) no-repeat;
   background-color: #4191e0;
   width: 100%;
+  padding: 0%;
   display: flex;
   align-content: center;
   align-items: center;
 }
 .container {
   width: 100%;
+  padding: 0%;
   text-align: center;
 }
 .divcont {
@@ -161,13 +173,14 @@ body {
   border-radius: 10px;
   display: inline-block;
 }
-input {
+input,select {
   width: 100%;
-  padding: 10px 10px;
+  padding: 5px 5px;
   margin: 1px 0;
   box-sizing: border-box;
   border-radius: 4px;
   border: 2px solid #ccc;
+  text-decoration-color: gray;
 }
 .input1 {
   width: 50%;

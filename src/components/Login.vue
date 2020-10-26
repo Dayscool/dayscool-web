@@ -7,12 +7,12 @@
         <br/>
         <form>
           <label >Nombre de usuario</label>
-          <input v-model="form.nombreU" class="form-input" id="nombreU" required>
+          <input v-model="form.nombreU" class="form-input" id="nombreU" required placeholder="Contraseña">
           <label >Contraseña:</label>
           <input v-model="form.password" class="form-input" type="password" id="password" placeholder="Contraseña">
         </form>
         <router-link :to="{name: 'signup'}"><button class="button button1">Crear cuenta</button></router-link>
-        <router-link :to="{name: 'Curso'}"><button class="button button2" type="submit">Ingresar</button></router-link>
+        <router-link :to="{name: 'Curso'}"><button class="button button2" type="submit" @click="login()">Ingresar</button></router-link>
       </div>
     </div>
   </div>
