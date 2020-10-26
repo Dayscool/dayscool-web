@@ -89,9 +89,8 @@ export default {
         rol: "",
         carrera: "",
         password: "",
-        cpassword: "",
-      },
-      prueba: {},
+        cpassword: ""
+      }
     };
   },
   methods: {
@@ -113,7 +112,7 @@ export default {
       console.log(this.errors);
     },
     sendNewUser() {
-      //if (checkUser) {
+      if (this.form.username != "" && this.form.password != "") {
       axios
         .post(this.$store.state.backURL, {
           query: `
@@ -138,13 +137,14 @@ export default {
         })
         .then((response) => {
           console.log(response.data.data);
+          alert("Usuario registrado")
         })
-        .catch((err) => console.log(err));
-
-      console.log(this.form.fecha);
-      //} else  {
-      //mostrar error
-      //}
+        .catch((err) => {
+          console.log(err)
+          alert("Nombre de usuario ya registrado")});
+      } else  {
+        alert("Datos incompletos");
+      }
     },
   },
 };

@@ -38,5 +38,14 @@ export default createStore({
       console.log(state.user);
     },
   },
+  getters: {
+    returnUser: (state) => {
+      if (!state.isLogged) {
+        return "There is no logged user";
+      } else {
+        return state.user;
+      }
+    }
+  },
   modules: {},
 });

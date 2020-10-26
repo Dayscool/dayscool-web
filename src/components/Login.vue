@@ -26,6 +26,7 @@
         <router-link :to="{ name: 'signup' }"
           ><button class="button button1">Crear cuenta</button></router-link
         >
+        <p v-if="err" class="error">Has introducido mal el email o la contraseña.</p>
         <button class="button button2" type="submit" @click="login">
           Ingresar
         </button>
@@ -43,7 +44,8 @@ export default {
       form: {
         nombreU: "",
         password: ""
-      }
+      },
+      err: false
     };
   },
   methods: {
@@ -85,7 +87,7 @@ export default {
           })
           .catch(err =>{
             console.log(err);
-            alert("No se reconoce el usuario o la contraseña");
+            this.err = true;
             });
         }
       else{
