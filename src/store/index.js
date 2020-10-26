@@ -5,30 +5,34 @@ export default createStore({
     backURL: "http://34.66.222.170/graphql",
     isLoggedIn: false,
     user: {
-      id: null,
-      username: "",
-      name: "",
-      mail: "",
-      birthDate: "",
-      career: "",
-      role: "",
-      entryTime: "",
+      id: -1,
+      username: null,
+      name: null,
+      mail: null,
+      birthDate: null,
+      career: null,
+      role: null
     },
   },
   mutations: {
-    LOG_USER(state, newUser) {
-      state.user.id = newUser.id;
-      state.user.username = newUser.username;
-      state.user.name = newUser.name;
-      state.user.mail = newUser.mail;
-      state.user.birthDate = newUser.birthDate;
-      state.user.career = newUser.career;
-      state.user.entryTime = newUser.entryTime;
+    CHANGE_LOG_STATE(state){
+      state.isLoggedIn = !state.isLoggedIn;
+    },
+    LOG_USER(state, user) {
+      state.user.id = user.id;
+      state.user.username = user.username;
+      state.user.name = user.name;
+      state.user.mail = user.mail;
+      state.user.birthDate = user.birthDate;
+      state.user.career = user.career;
     },
   },
   actions: {
-    login({ state, commit }) {
-      commit("LOG_USER", state);
+    changeLogState({ state, commit }) {
+      commit("CHANGE_LOG_STATE", state);
+    },
+    login({ commit }, user) {
+      commit("LOG_USER", user);
     },
     loginPrint({ state }) {
       console.log(state.user);

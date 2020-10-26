@@ -26,11 +26,9 @@
         <router-link :to="{ name: 'signup' }"
           ><button class="button button1">Crear cuenta</button></router-link
         >
-        <router-link :to="{ name: 'Curso' }"
-          ><button class="button button2" type="submit" @click="login()">
-            Ingresar
-          </button></router-link
-        >
+        <button class="button button2" type="submit" @click="login">
+          Ingresar
+        </button>
       </div>
     </div>
   </div>
@@ -44,40 +42,57 @@ export default {
     return {
       form: {
         nombreU: "",
-        password: "",
-      },
+        password: ""
+      }
     };
   },
   methods: {
     login() {
-      axios
-        .post(this.$store.state.backURL, {
-          query: `
-            query  getUserC($username: String!, $password: String!){
-              getUserC(username: $username, password: $password){
-                id
-                username
-                name
-                mail
-                birthDate
-                career
-                role
-                entryTime
-              }
-            }`,
-          variables: {
-            username: this.form.nombreU,
-            password: this.form.password,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          this.$store.dispatch("login", response.data.data);
-          this.$store.dispatch("loginPrint");
-        })
-        .catch((err) => console.log(err));
-    },
-  },
+      if (this.form.username != "" && this.form.password != "") {
+        axios
+          .post(this.$store.state.backURL, {
+            query: `
+              query  getUserC($username: String!, $password: String!){
+                getUserC(username: $username, password: $password){
+                  id
+                  username
+                  name
+                  mail
+                  birthDate
+                  career
+                  role
+                }
+              }`,
+            variables: {
+              username: this.form.nombreU,
+              password: this.form.password
+            }
+          })
+          .then(response => {
+            console.log(response.data.data.getUserC);
+            let user ={
+              id: response.data.data.getUserC.id,
+              username: response.data.data.getUserC.username,
+              mail: response.data.data.getUserC.mail,
+              birthDate: response.data.data.getUserC.birthDate,
+              career: response.data.data.getUserC.career,
+              role: response.data.data.getUserC.role
+            }
+            this.$store.dispatch("login", user);
+            this.$store.dispatch("changeLogState");
+            this.$store.dispatch("loginPrint");
+            this.$router.push("/nani")
+          })
+          .catch(err =>{
+            console.log(err);
+            alert("No se reconoce el usuario o la contraseña");
+            });
+        }
+      else{
+        alert("Un nombre de usuario y contraseña deben ser proporcionados");
+      }
+    }
+  }
 };
 </script>
 
