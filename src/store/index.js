@@ -25,6 +25,7 @@ export default createStore({
       state.user.mail = user.mail;
       state.user.birthDate = user.birthDate;
       state.user.career = user.career;
+      state.user.role = user.role;
     },
   },
   actions: {
@@ -40,7 +41,7 @@ export default createStore({
   },
   getters: {
     returnUser: (state) => {
-      if (!state.isLogged) {
+      if (!state.isLoggedIn) {
         return "There is no logged user";
       } else {
         return state.user;

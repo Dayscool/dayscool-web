@@ -31,14 +31,38 @@ export default {
         }
     },
     mounted() {
-        axios.post('https://be4dc335-d873-469a-b59a-3a5b4dc0d7d9.mock.pstmn.io', {
-            query: `
-                getCursoStudentById (12) {
-                    id
-                    nombre
+        console.log(this.$store.getters.returnUser);
+        if (this.$store.getters.returnUser.role === null) {
+            alert("no hay rol");
+        } else if(this.$store.getters.returnUser.role == "Profesor") {
+            axios.post(this.$store.state.backURL, {
+                query: `
+                    query getCursoById ($id: Int!){
+                    getCursoById (id: $id) {
+                        Id
+                        nombre
+                    }
+                    }
+                `,
+                variables: {
+                    id: this.$store.state.user.id
                 }
-            `
-        }).then(response => (this.cursos = response.data))
+            }).then(response => (this.cursos = response.data))
+        } else {
+            axios.post(this.$store.state.backURL, {
+                query: `
+                    query getCursoStudentById($id: Int!){
+                        getCursoStudentById(id: $id) {
+                        Id
+                        nombre
+                    }
+                    }
+                `,
+                variables: {
+                    id: this.$store.state.user.id
+                }
+            }).then(response => (this.cursos = response.data))
+        }
     } 
 }
 </script>
