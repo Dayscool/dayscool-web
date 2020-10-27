@@ -1,7 +1,7 @@
 <template>
 <div>
     <div id="top">
-        soy top uwu
+       
     </div>
     <div id=cuerpo>
         <p>
