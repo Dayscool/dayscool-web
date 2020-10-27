@@ -1,12 +1,13 @@
 <template>
 <div>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat Alternates' rel='stylesheet'>
     <div id="top">
        
     </div>
     <div id=cuerpo>
-        <p>
-            Mis Cursos 
-        </p>
+        <h2>
+            Mis Cursos
+        </h2>
         <div id="lista">
             <Curso v-for="curso in cursos" v-bind:cursr="curso" v-bind:key = "curso.id" />
         </div>
@@ -68,6 +69,12 @@ export default {
 </script>
 
 <style>
+div{
+    font-family: Montserrat Alternates;
+}
+#cuerpo > h2 {
+    font-family: inherit;
+}
 div#lista{ 
     display: flex;
     flex-direction: row ;
