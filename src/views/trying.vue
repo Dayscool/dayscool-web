@@ -47,7 +47,7 @@ export default {
                 variables: {
                     id: this.$store.state.user.id
                 }
-            }).then(response => (this.cursos = response.data))
+            }).then(response => (this.cursos = response.data.data.getCursoStudentById))
         } else {
             axios.post(this.$store.state.backURL, {
                 query: `
@@ -61,7 +61,7 @@ export default {
                 variables: {
                     id: this.$store.state.user.id
                 }
-            }).then(response => (this.cursos = response.data))
+            }).then(response => (this.cursos = response.data.data.getCursoStudentById))
         }
     } 
 }
