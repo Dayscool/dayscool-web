@@ -2,7 +2,8 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    backURL: "http://34.66.222.170/graphql",
+    backURL: "http://localhost:5000/graphql",
+    //backURL: "http://34.66.222.170/graphql",
     isLoggedIn: false,
     user: {
       id: -1,
@@ -11,11 +12,11 @@ export default createStore({
       mail: null,
       birthDate: null,
       career: null,
-      role: null
+      role: null,
     },
   },
   mutations: {
-    CHANGE_LOG_STATE(state){
+    CHANGE_LOG_STATE(state) {
       state.isLoggedIn = !state.isLoggedIn;
     },
     LOG_USER(state, user) {
@@ -46,7 +47,7 @@ export default createStore({
       } else {
         return state.user;
       }
-    }
+    },
   },
   modules: {},
 });
