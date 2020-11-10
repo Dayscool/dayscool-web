@@ -2,8 +2,8 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    backURL: "http://localhost:5000/graphql",
-    //backURL: "http://34.66.222.170/graphql",
+    //backURL: "http://localhost:5000/graphql",
+    backURL: "http://34.66.222.170:5000/graphql",
     isLoggedIn: false,
     user: {
       id: -1,
@@ -14,10 +14,12 @@ export default createStore({
       career: null,
       role: null,
     },
+    currentPage: "",
   },
   mutations: {
     CHANGE_LOG_STATE(state) {
       state.isLoggedIn = !state.isLoggedIn;
+      console.log(state.isLoggedIn);
     },
     LOG_USER(state, user) {
       state.user.id = user.id;
@@ -27,6 +29,9 @@ export default createStore({
       state.user.birthDate = user.birthDate;
       state.user.career = user.career;
       state.user.role = user.role;
+    },
+    CHANGE_CURRENT_PAGE(state, currentPage) {
+      state.currentPage = currentPage;
     },
   },
   actions: {
@@ -39,6 +44,9 @@ export default createStore({
     loginPrint({ state }) {
       console.log(state.user);
     },
+    swapPage({ commit }, page) {
+      commit("CHANGE_CURRENT_PAGE", page);
+    },
   },
   getters: {
     returnUser: (state) => {
@@ -47,6 +55,12 @@ export default createStore({
       } else {
         return state.user;
       }
+    },
+    isLoggedIn: (state) => {
+      return state.isLoggedIn;
+    },
+    getCurrentView: (state) => {
+      return state.currentPage;
     },
   },
   modules: {},

@@ -1,13 +1,13 @@
 <template>
-  <!-- <NavBar /> -->
+  <NavBar v-if="this.$store.getters.isLoggedIn" />
   <router-view />
 </template>
 
 <script>
-// import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
 export default {
   components: {
-    // NavBar,
+    NavBar,
   },
 };
 </script>
@@ -92,7 +92,7 @@ button {
   color: white;
 }
 .divlogin {
-  background-color: #4191e0;
+  background-image: url("assets/fondo-login.jpg");
   width: 100%;
   height: 100vh;
   padding: 0%;

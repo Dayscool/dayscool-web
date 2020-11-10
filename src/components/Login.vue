@@ -87,10 +87,12 @@ export default {
               birthDate: response.data.data.getUserC.birthDate,
               career: response.data.data.getUserC.career,
               role: response.data.data.getUserC.role,
+              name: response.data.data.getUserC.name,
             };
             this.$store.dispatch("login", user);
             this.$store.dispatch("changeLogState");
             this.$store.dispatch("loginPrint");
+            this.$store.dispatch("swapPage", "Mis cursos");
             this.$router.push("/nani");
           })
           .catch((err) => {
@@ -115,7 +117,6 @@ export default {
 }
 .divcont {
   width: 30vw;
-  background: rgba(255, 255, 255, 255);
   padding: 2%;
   border-radius: 10px;
   display: flex;
@@ -124,6 +125,7 @@ export default {
   align-items: center;
   box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
   min-height: 65vh;
+  background-color: white;
 }
 .button1 {
   background-color: white;
