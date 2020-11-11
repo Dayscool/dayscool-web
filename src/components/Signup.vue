@@ -92,7 +92,8 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
+import { mapActions } from 'vuex';
 export default {
   name: "signup",
   data() {
@@ -128,15 +129,16 @@ export default {
       e.preventDefault();
       console.log(this.errors);
     },
-    sendNewUser() {
+    ...mapActions(['register']),
+    sendNewUser: function() {
       if (this.form.username != "" && this.form.password != "") {
-        axios
+        /*axios
           .post(this.$store.state.backURL, {
             query: `
             mutation createUser2($user2: User2Input!){
               createUser2(user2: $user2) {
                 id
-                username
+                usernames
                 role
               }
             }`,
@@ -151,10 +153,12 @@ export default {
                 password: this.form.password,
               },
             },
-          })
+          })*/
+          this.register(this.form)
           .then((response) => {
             console.log(response.data.data);
             alert("Usuario registrado");
+            this.$router.push('/login');
           })
           .catch((err) => {
             console.log(err);
