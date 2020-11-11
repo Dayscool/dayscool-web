@@ -1,22 +1,15 @@
-FROM node:12.19.0
-
-# instalar un simple servidor http para servir nuestro contenido estático
-RUN npm install -g http-server
-
-# hacer la carpeta 'app' el directorio de trabajo actual
-WORKDIR /apps
-
-# copiar 'package.json' y 'package-lock.json' (si están disponibles)
-COPY package*.json ./
-
-# instalar dependencias del proyecto
-RUN npm install
-
-# copiar los archivos y carpetas del proyecto al directorio de trabajo actual (es decir, la carpeta 'app')
-COPY . .
-
-# construir aplicación para producción minificada
-RUN npm run build
-
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
+FROM node:lts-alpine as develop-stage 
+WORKDIR /app 
+COPY package*.json ./ 
+RUN npm install 
+COPY . . 
+ 
+# build stage 
+FROM develop-stage as build-stage 
+RUN npm run build 
+ 
+# production stage 
+FROM nginx:alpine as production-stage 
+COPY --from=build-stage /app/dist /usr/share/nginx/html 
+EXPOSE 10300 
+CMD ["nginx", "-g", "daemon off;"]
