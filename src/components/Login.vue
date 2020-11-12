@@ -2,13 +2,11 @@
   <div class="divlogin">
     <div class="container">
       <div class="divcont">
-        <img class="logo" alt="Dayscool logo" src="../assets/Logo512px.svg" />
+        <img alt="Dayscool logo" src="../assets/logod.png" />
         <h3>Iniciar Sesión</h3>
         <br />
         <form>
-          <div class="form-label">
-            <label>Nombre de usuario</label>
-          </div>
+          <label>Nombre de usuario</label>
           <input
             v-model="form.nombreU"
             class="form-input"
@@ -16,9 +14,7 @@
             required
             placeholder="Contraseña"
           />
-          <div class="form-label">
-            <label>Contraseña:</label>
-          </div>
+          <label>Contraseña:</label>
           <input
             v-model="form.password"
             class="form-input"
@@ -27,17 +23,13 @@
             placeholder="Contraseña"
           />
         </form>
-        <div>
-          <router-link :to="{ name: 'signup' }"
-            ><button class="button button1">Crear cuenta</button></router-link
-          >
-          <p v-if="err" class="error">
-            Has introducido mal el email o la contraseña.
-          </p>
-          <button class="button button2" type="submit" @click="login">
-            Ingresar
-          </button>
-        </div>
+        <router-link :to="{ name: 'signup' }"
+          ><button class="button button1">Crear cuenta</button></router-link
+        >
+        <p v-if="err" class="error">Has introducido mal el email o la contraseña.</p>
+        <button class="button button2" type="submit" @click="login">
+          Ingresar
+        </button>
       </div>
     </div>
   </div>
@@ -51,9 +43,9 @@ export default {
     return {
       form: {
         nombreU: "",
-        password: "",
+        password: ""
       },
-      err: false,
+      err: false
     };
   },
   methods: {
@@ -75,74 +67,103 @@ export default {
               }`,
             variables: {
               username: this.form.nombreU,
-              password: this.form.password,
-            },
+              password: this.form.password
+            }
           })
-          .then((response) => {
+          .then(response => {
             console.log(response.data.data.getUserC);
-            let user = {
+            let user ={
               id: response.data.data.getUserC.id,
               username: response.data.data.getUserC.username,
               mail: response.data.data.getUserC.mail,
               birthDate: response.data.data.getUserC.birthDate,
               career: response.data.data.getUserC.career,
-              role: response.data.data.getUserC.role,
-              name: response.data.data.getUserC.name,
-            };
+              role: response.data.data.getUserC.role
+            }
             this.$store.dispatch("login", user);
             this.$store.dispatch("changeLogState");
             this.$store.dispatch("loginPrint");
-            this.$store.dispatch("swapPage", "Mis cursos");
-            this.$router.push("/nani");
+            this.$router.push("/nani")
           })
-          .catch((err) => {
+          .catch(err =>{
             console.log(err);
             this.err = true;
-          });
-      } else {
+            });
+        }
+      else{
         alert("Un nombre de usuario y contraseña deben ser proporcionados");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
+body {
+  background-color: #427fb9;
+}
+
+.divlogin {
+  //background: url(../img/fondo.jpg) no-repeat;
+  background-color: #427fb9;
+  width: 100%;
+  height: 100vh;
+  margin: 0%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
 .container {
   width: 100%;
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 .divcont {
-  width: 30vw;
+  width: 100%;
+  max-width: 300px;
+  background: rgba(255, 255, 255, 255);
   padding: 2%;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  display: inline-block;
   box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
-  min-height: 65vh;
-  background-color: white;
+}
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 2px solid #ccc;
+}
+form {
+  text-align: left;
+}
+button {
+  background-color: #4c87af;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 6px 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 .button1 {
   background-color: white;
-  color: #4c87af;
-  border: none;
+  color: black;
+  border: 1px solid #4c87af;
 }
 .button1:hover {
   background-color: #4c87af;
   color: white;
 }
+
 .button2 {
   background-color: #4c87af;
   color: white;
   border: 2px solid #4c87af;
-}
-.form-label {
-  text-align: left;
-  width: 100%;
 }
 </style>
