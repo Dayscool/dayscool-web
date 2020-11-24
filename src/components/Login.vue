@@ -51,9 +51,9 @@ export default {
     return {
       form: {
         nombreU: "",
-        password: "",
+        password: ""
       },
-      err: false,
+      err: false
     };
   },
   methods: {
@@ -62,50 +62,71 @@ export default {
         axios
           .post(this.$store.state.backURL, {
             query: `
-              query  getUserC($username: String!, $password: String!){
-                getUserC(username: $username, password: $password){
-                  id
-                  username
-                  name
-                  mail
-                  birthDate
-                  career
-                  role
+              mutation login ($username: String!, $password: String!){
+                login(username: $username, password: $password){
+                  token
                 }
               }`,
             variables: {
               username: this.form.nombreU,
-              password: this.form.password,
-            },
+              password: this.form.password
+            }
           })
-          .then((response) => {
-            console.log(response.data.data.getUserC);
-            let user = {
-              id: response.data.data.getUserC.id,
-              username: response.data.data.getUserC.username,
-              mail: response.data.data.getUserC.mail,
-              birthDate: response.data.data.getUserC.birthDate,
-              career: response.data.data.getUserC.career,
-              role: response.data.data.getUserC.role,
-              name: response.data.data.getUserC.name,
-            };
-            this.$store.dispatch("login", user);
-            this.$store.dispatch("changeLogState");
-            this.$store.dispatch("loginPrint");
-            this.$store.dispatch("swapPage", "Mis cursos");
-            this.$router.push("/nani");
-          })
-          .catch((err) => {
-            console.log(err);
-            this.err = true;
-          });
-      } else {
+          .then(response => {
+            const token = response.data.data.login.token;
+            localStorage.setItem('user-token', token);
+            this.getUserInfo(localStorage.getItem('user-token'));
+          }); 
+      }   
+      else{
         alert("Un nombre de usuario y contraseña deben ser proporcionados");
       }
     },
-  },
+    getUserInfo(token){
+      axios.post(this.$store.state.backURL, {
+        query: `
+              query getUserByUsername ($username: String!){
+                getUserByUsername(username: $username){
+                  id
+                  username
+                  mail
+                  birthDate
+                  career
+                  role
+                  name
+                }
+              }`,
+            variables: {
+              username: this.form.nombreU,
+              password: this.form.password
+            },
+            headers: {
+              "Authorization": "Bearer " + token
+            }
+      }).then(response =>{
+        let user = {
+              id: response.data.data.getUserByUsername.id,
+              username: response.data.data.getUserByUsername.username,
+              mail: response.data.data.getUserByUsername.mail,
+              birthDate: response.data.data.getUserByUsername.birthDate,
+              career: response.data.data.getUserByUsername.career,
+              role: response.data.data.getUserByUsername.role,
+              name: response.data.data.getUserByUsername.name
+            }
+            this.$store.dispatch("login", user);
+            this.$store.dispatch("changeLogState");
+            this.$store.dispatch("loginPrint");
+            this.$router.push("/nani")
+          .catch(err =>{
+            console.log(err);
+            this.err = true;
+            });
+      })
+    }
+  }
 };
 </script>
+
 
 <style scoped lang="scss">
 .container {

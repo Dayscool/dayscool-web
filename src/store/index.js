@@ -19,7 +19,6 @@ export default createStore({
   mutations: {
     CHANGE_LOG_STATE(state) {
       state.isLoggedIn = !state.isLoggedIn;
-      console.log(state.isLoggedIn);
     },
     LOG_USER(state, user) {
       state.user.id = user.id;
@@ -32,6 +31,15 @@ export default createStore({
     },
     CHANGE_CURRENT_PAGE(state, currentPage) {
       state.currentPage = currentPage;
+    },
+    LOGOUT(state){
+      state.user.id = "";
+      state.user.username = "";
+      state.user.name = "";
+      state.user.mail = "";
+      state.user.birthDate = "";
+      state.user.career = "";
+      state.user.role = "";
     },
   },
   actions: {
@@ -46,6 +54,10 @@ export default createStore({
     },
     swapPage({ commit }, page) {
       commit("CHANGE_CURRENT_PAGE", page);
+    },
+    logout({ state, commit }){
+      commit("LOGOUT", state);
+      commit("CHANGE_LOG_STATE", state);
     },
   },
   getters: {

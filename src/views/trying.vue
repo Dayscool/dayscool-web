@@ -14,6 +14,8 @@
         <div class = "boton">
             Cursos Anteriores
         </div>
+        <div>
+        </div>
     </div>
 </div>
 </template>
@@ -47,6 +49,10 @@ export default {
                 `,
                 variables: {
                     id: this.$store.state.user.id
+                },
+            }, {
+                headers:{
+                    "Authorization": "Bearer " + localStorage.getItem("user-token")
                 }
             }).then(response => (this.cursos = response.data.data.getCursoStudentById))
         } else {
@@ -61,8 +67,11 @@ export default {
                 `,
                 variables: {
                     id: this.$store.state.user.id
-                }
-            }).then(response => (this.cursos = response.data.data.getCursoStudentById))
+                },
+            }, 
+            {headers:{
+                "Authorization": "Bearer " + localStorage.getItem("user-token")
+        }}).then(response => (this.cursos = response.data.data.getCursoStudentById))
         }
     } 
 }

@@ -18,8 +18,11 @@
           src="../assets/envelope_close.svg"
           alt="message"
         />
+        <div>
+      <button v-on:click="logout()">Cerrar sesión</button>
+    </div>
       </div>
-      <div>
+      <div id="info-user">
         <span>{{ $store.getters.returnUser.role }}</span>
         <span>{{ $store.getters.returnUser.name }}</span>
       </div>
@@ -30,21 +33,26 @@
 <script>
 export default {
   name: "NavBar",
+  methods:{
+    logout(){
+      localStorage.removeItem("user-token");
+      this.$store.dispatch("logout");
+      this.$router.push("/");
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-div {
-  border: 1px solid black;
-}
 .icon {
   width: 3vw;
   max-width: 100px;
   margin: 10px 50px;
 }
 .icon-small {
-  width: 3vw;
+  width: 2.5vw;
   max-width: 100px;
+  margin: 10px 10px;
 }
 #nav-container {
   border: 1px solid #4c87af;
@@ -61,7 +69,7 @@ div {
   font-size: 2vw;
   margin-top: 20px;
 }
-#user-info {
+#user-info, #info-user{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
