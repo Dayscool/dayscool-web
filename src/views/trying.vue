@@ -1,26 +1,29 @@
 <template>
-<div>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat Alternates' rel='stylesheet'>
-    <div id="top">
-       
-    </div>
-    <div id=cuerpo>
-        <h2>
-            Mis Cursos
-        </h2>
-        <div id="lista">
-            <Curso v-for="curso in cursos" v-bind:cursr="curso" v-bind:key = "curso.id" />
+    <div>
+        <link href='https://fonts.googleapis.com/css?family=Montserrat Alternates' rel='stylesheet'>
+        <div id="top">
+
         </div>
-        <div class = "boton">
-            Cursos Anteriores
+        <div id=cuerpo>
+            <h2>
+                Mis Cursos
+            </h2>
+            <div id="lista">
+                <Curso v-for="curso in cursos" v-bind:cursr="curso" v-bind:key="curso.id" />
+            </div>
+            <div class="boton">
+                Cursos Anteriores
+            </div>
+
         </div>
+        
     </div>
-</div>
 </template>
 
 <script>
-import Curso from "@/components/cours.vue";
-const axios = require('axios');
+    import Curso from "@/components/cours.vue";
+    const axios = require('axios');
+    
 export default {
     name: "cursos",
     components: {
@@ -30,7 +33,8 @@ export default {
         return {
             cursos: null
         }
-    },
+        },
+        
     mounted() {
         console.log(this.$store.getters.returnUser);
         if (this.$store.getters.returnUser.role === null) {
@@ -64,7 +68,10 @@ export default {
                 }
             }).then(response => (this.cursos = response.data.data.getCursoStudentById))
         }
-    } 
+    }
+    
+    
+    
 }
 </script>
 

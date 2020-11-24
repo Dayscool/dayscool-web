@@ -45,15 +45,16 @@
 
 <script>
 import axios from "axios";
+import firebase from "firebase";
 export default {
   name: "Login",
   data() {
     return {
       form: {
         nombreU: "",
-        password: "",
+        password: ""
       },
-      err: false,
+      err: false
     };
   },
   methods: {
@@ -62,8 +63,8 @@ export default {
         axios
           .post(this.$store.state.backURL, {
             query: `
-              query  getUserC($username: String!, $password: String!){
-                getUserC(username: $username, password: $password){
+              query  getUserByUsername($username: String!){
+                getUserByUsername(username: $username){
                   id
                   username
                   name
@@ -74,36 +75,46 @@ export default {
                 }
               }`,
             variables: {
-              username: this.form.nombreU,
-              password: this.form.password,
-            },
+              username: this.form.nombreU
+              //password: this.form.password,
+            }
           })
-          .then((response) => {
-            console.log(response.data.data.getUserC);
+          .then(response => {
+            console.log(response.data.data.getUserByUsername);
             let user = {
-              id: response.data.data.getUserC.id,
-              username: response.data.data.getUserC.username,
-              mail: response.data.data.getUserC.mail,
-              birthDate: response.data.data.getUserC.birthDate,
-              career: response.data.data.getUserC.career,
-              role: response.data.data.getUserC.role,
-              name: response.data.data.getUserC.name,
+              id: response.data.data.getUserByUsername.id,
+              username: response.data.data.getUserByUsername.username,
+              mail: response.data.data.getUserByUsername.mail,
+              birthDate: response.data.data.getUserByUsername.birthDate,
+              career: response.data.data.getUserByUsername.career,
+              role: response.data.data.getUserByUsername.role,
+              name: response.data.data.getUserByUsername.name
             };
             this.$store.dispatch("login", user);
             this.$store.dispatch("changeLogState");
             this.$store.dispatch("loginPrint");
             this.$store.dispatch("swapPage", "Mis cursos");
+
+            const FIREBASE_DATABASE = firebase.database();
+
+            FIREBASE_DATABASE.ref("/notifications")
+              .push({
+                user: response.data.data.getUserByUsername.name
+              })
+              .catch(() => {
+                console.log("error sending notification :(");
+              });
             this.$router.push("/nani");
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
             this.err = true;
           });
       } else {
         alert("Un nombre de usuario y contraseña deben ser proporcionados");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

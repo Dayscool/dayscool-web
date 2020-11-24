@@ -1,8 +1,6 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import firebase from 'firebase/app';
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js');
+
 
 var firebaseConfig = {
     apiKey: "AIzaSyAHThNdzfEGtsemsRGThvjua2KwM-kui_U",
@@ -17,7 +15,8 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-createApp(App)
-  .use(store)
-  .use(router)
-  .mount("#app");
+const messaging = firebase.messaging();
+
+messaging.onMessage((payload) => {
+    console.log('Message received. ', payload);
+  });

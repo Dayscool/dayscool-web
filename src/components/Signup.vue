@@ -106,8 +106,8 @@ export default {
         rol: "",
         carrera: "",
         password: "",
-        cpassword: "",
-      },
+        cpassword: ""
+      }
     };
   },
   methods: {
@@ -149,8 +149,8 @@ export default {
                 role: this.form.rol,
                 name: this.form.nombreC,
                 password: this.form.password,
-              },
-            },
+              }
+            }
           })
           .then((response) => {
             console.log(response.data.data);
