@@ -133,15 +133,15 @@ export default {
         axios
           .post(this.$store.state.backURL, {
             query: `
-            mutation createUser2($user2: User2Input!){
-              createUser2(user2: $user2) {
-                id
-                username
-                role
+              mutation register ($userToRegister: UserAuthInput!){
+                register(userToRegister: $userToRegister){
+                  name,
+                  mail
+                }
               }
-            }`,
+              }`,
             variables: {
-              user2: {
+              userToRegister:{
                 username: this.form.nombreU,
                 mail: this.form.email,
                 birthDate: this.form.fecha,
@@ -149,8 +149,8 @@ export default {
                 role: this.form.rol,
                 name: this.form.nombreC,
                 password: this.form.password,
-              },
-            },
+              }
+            }
           })
           .then((response) => {
             console.log(response.data.data);
