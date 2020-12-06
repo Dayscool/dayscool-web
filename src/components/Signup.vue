@@ -139,7 +139,7 @@ export default {
                   mail
                 }
               }
-              }`,
+              `,
             variables: {
               userToRegister:{
                 username: this.form.nombreU,

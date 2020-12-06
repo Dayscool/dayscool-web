@@ -3,7 +3,7 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     //backURL: "http://localhost:5000/graphql",
-    backURL: "http://52.87.141.219:32754/graphql",
+    backURL: "http://172.31.40.129:32754/graphql",
     isLoggedIn: false,
     user: {
       id: -1,
